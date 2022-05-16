@@ -15,10 +15,10 @@ namespace NewsBackEnd.Controllers
     public class NewsController : Controller
     {
         public News news = new();
-        public JsonResult GetNewsArticles()
+        public JsonResult GetNewsArticles(string criteria)
         {
             List<News> newsArticles = new();
-            foreach (var article in news.GetArticlesBySearch(Languages.EN, DateTime.Today, "War"))
+            foreach (var article in news.GetArticlesBySearch(Languages.EN,new DateTime(2022, 05, 16), criteria))
             {
                 newsArticles.Add(new News(article));
             }
