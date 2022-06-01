@@ -8,13 +8,14 @@ namespace NewsBackEnd.Models
 {
     public class News
     {
-        public int Amount;
-        public string? Title;
-        public string? SourceName;
-        public string? Description;
-        public string? Url;
+        public int Amount { get; set; }
+        public string? Title {get;set;}
+        public string? SourceName { get; set; }
+        public string? Description { get; set; }
+        public string? Url { get; set; }
         public DateTime ReleaseDate = DateTime.Today;
-        public string Search;
+        public string Search { get; set; }
+        public string Imgurl { get; set; }
 
         public List<Article> newsArticles = new();
 
@@ -22,13 +23,15 @@ namespace NewsBackEnd.Models
         {
         }
 
-        public News(Article news)
+        public News(Article news, int amount)
         {
+            Amount = amount;
             Title = news.Title;
             SourceName = news.Source.Name;
             Description = news.Description;
             ReleaseDate = (DateTime)news.PublishedAt;
             Url = news.Url;
+            Imgurl = news.UrlToImage;
         }
         public List<Article> GetArticlesBySearch(Languages language, DateTime date, string search)
         {

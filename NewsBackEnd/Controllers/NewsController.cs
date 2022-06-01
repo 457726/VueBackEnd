@@ -7,6 +7,7 @@ using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using NewsBackEnd.Models;
+using System.Web;
 
 namespace NewsBackEnd.Controllers
 {
@@ -17,16 +18,16 @@ namespace NewsBackEnd.Controllers
         public News news = new();
         public JsonResult GetNewsArticles(string criteria)
         {
+            int amount = 1;
             List<News> newsArticles = new();
-            foreach (var article in news.GetArticlesBySearch(Languages.EN,new DateTime(2022, 05, 16), criteria))
+            foreach (var article in news.GetArticlesBySearch(Languages.NL, DateTime.Today, criteria))
             {
-                newsArticles.Add(new News(article));
+                amount += 1;
+                newsArticles.Add(new News(article, amount));
             }
-            string hotArticles = JsonConvert.SerializeObject(new
-            {
-                newsArticles
-            });
-            return Json(hotArticles);
+            //string hotArticles = JsonConvert.SerializeObject(newsArticles);
+
+            return Json(newsArticles);
         }
     }
 }
