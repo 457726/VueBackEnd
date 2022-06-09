@@ -1,1 +1,1 @@
-Back end van de nieuwsapplicatie
+Back end van de nieuwsapplicatie.
