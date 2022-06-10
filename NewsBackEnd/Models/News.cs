@@ -53,5 +53,73 @@ namespace NewsBackEnd.Models
             }
             return null;
         }
+
+        public List<Article> GetPopularNews()
+        {
+            var newsApiClient = new NewsApiClient("abdac52f05f64ef5805779553a2218e3");
+            var articlesResponse = newsApiClient.GetTopHeadlines(new TopHeadlinesRequest
+            {
+                Language = Languages.NL
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                foreach (var article in articlesResponse.Articles)
+                {
+                    newsArticles.Add(article);
+                }
+            }
+            return newsArticles;
+        }
+        public List<Article> GetWarNews()
+        {
+            var newsApiClient = new NewsApiClient("abdac52f05f64ef5805779553a2218e3");
+            var articlesResponse = newsApiClient.GetTopHeadlines(new TopHeadlinesRequest
+            {
+                Q = "oorlog",
+                Language = Languages.NL
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                foreach (var article in articlesResponse.Articles)
+                {
+                    newsArticles.Add(article);
+                }
+            }
+            return newsArticles;
+        }
+        public List<Article> GetCoronaNews()
+        {
+            var newsApiClient = new NewsApiClient("abdac52f05f64ef5805779553a2218e3");
+            var articlesResponse = newsApiClient.GetTopHeadlines(new TopHeadlinesRequest
+            {
+                Q = "corona",
+                Language = Languages.NL
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                foreach (var article in articlesResponse.Articles)
+                {
+                    newsArticles.Add(article);
+                }
+            }
+            return newsArticles;
+        }
+        public List<Article> GetSportsNews()
+        {
+            var newsApiClient = new NewsApiClient("abdac52f05f64ef5805779553a2218e3");
+            var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
+            {
+                Q = "sport",
+                Language = Languages.NL
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                foreach (var article in articlesResponse.Articles)
+                {
+                    newsArticles.Add(article);
+                }
+            }
+            return newsArticles;
+        }
     }
 }
