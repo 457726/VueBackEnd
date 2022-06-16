@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using NewsBackEnd.Models;
+using System.Collections.Generic;
 
 namespace NewsBackEnd.DataAccess
 {
@@ -23,6 +25,57 @@ namespace NewsBackEnd.DataAccess
             cmd.Parameters.AddWithValue("@comment", comment);
 
             MySqlDataReader reader = cmd.ExecuteReader();
+        }
+        [HttpGet]
+        public List<ReviewModel> GetArticleReviews(string title)
+        {
+            List<ReviewModel> articleReviews = new();
+            using MySqlConnection con = new(connectionString);
+            con.Open();
+
+            MySqlCommand cmd = new($" SELECT `Comment`, `Rating` FROM `review` WHERE `Title` = @title", con);
+            cmd.Parameters.AddWithValue("@title", title);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ReviewModel rating = new();
+                rating.Comment = reader["Comment"].ToString();
+                rating.Rating = int.Parse(reader["Rating"].ToString());
+                articleReviews.Add(rating);
+            }
+            reader.Close();
+
+            return articleReviews;
+        }
+
+        [HttpGet]
+        public int GetGrades(string title)
+        {
+            List<int> grades = new();
+            using MySqlConnection con = new(connectionString);
+            con.Open();
+
+            MySqlCommand cmd = new($" SELECT `Rating` FROM `review` WHERE `Title` = @title", con);
+            cmd.Parameters.AddWithValue("@title", title);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int articleGrade;
+                articleGrade = int.Parse(reader["Rating"].ToString());
+                grades.Add(articleGrade);
+            }
+            reader.Close();
+
+            int grade = 0;
+            int i = 0;
+            foreach (var rating in grades)
+            {
+                i++;
+                grade += rating;
+            }
+            return grade;
         }
     }
 }

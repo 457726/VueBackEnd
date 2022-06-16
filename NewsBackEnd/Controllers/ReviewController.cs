@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using NewsBackEnd.DataAccess;
 using NewsBackEnd.Models;
 using System;
+using System.Collections.Generic;
 
 namespace NewsBackEnd.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ReviewController : Controller
     {
@@ -29,6 +30,24 @@ namespace NewsBackEnd.Controllers
                 }
             }
             return "";
+        }
+        [HttpGet]
+        public JsonResult GetReviews(string title)
+        {
+            List<ReviewModel> reviews = new();
+
+            foreach (var review in ratingDataAccess.GetArticleReviews(title))
+            {
+                reviews.Add(review);
+            }
+
+            return Json(reviews);
+        }
+
+        [HttpGet]
+        public JsonResult GetGrade(string title)
+        {
+            return Json(ratingDataAccess.GetGrades(title));
         }
     }
 }
