@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.29, )"
+            },
             "NewsAPI": {
               "target": "Package",
               "version": "[0.6.0, )"
